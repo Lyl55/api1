@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api1.DB;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace api1
 {
@@ -26,7 +29,10 @@ namespace api1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //configure MediaTR
+            services.AddMediatR(typeof(Startup));
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
